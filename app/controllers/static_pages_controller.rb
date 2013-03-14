@@ -5,4 +5,13 @@ class StaticPagesController < ApplicationController
 
   def help
   end
+
+  # Method for the about us
+  def about
+  end
+  
+  # Method for contatc
+  def contact
+  end
+
 end
