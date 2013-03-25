@@ -1,4 +1,7 @@
 WhoCares::Application.routes.draw do
+  # sets up the table of correspondency for
+  # REST-actions
+  resources :users
 
   # define some routes
   root to: 'static_pages#home'
