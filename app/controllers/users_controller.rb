@@ -15,6 +15,7 @@ class UsersController < ApplicationController
 
   # when user clicks the button
   def create
+    @params = params[:user]
     @user = User.new(params[:user])
     if @user.save
       flash[:success] = "Welcome to the Sample App!"

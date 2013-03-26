@@ -7,4 +7,10 @@ module UsersHelper
     gravatar_url = "http://gravatar.com/avatar/#{gravatar_id}?s=#{size}" 
     image_tag(gravatar_url, alt:user.name, class:"gravatar")
   end
+
+  # Twitter style user name with the @ infront
+  def twitter_style(user)
+    splitter = user.email.split('@')
+    "@" + splitter[0] 
+  end
 end
