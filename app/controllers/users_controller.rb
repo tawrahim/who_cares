@@ -9,6 +9,7 @@ class UsersController < ApplicationController
 
   # This is where we show some info to the
   # user, this matches to /users/id
+  # This where the user_path comes in play
   def show
     @user = User.find(params[:id])
   end
