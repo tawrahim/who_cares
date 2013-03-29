@@ -5,7 +5,7 @@ module SessionsHelper
   def sign_in(user)
     # sign the user in
     cookies.permanent[:remember_token] = user.remember_token
-    current_user = user 
+    self.current_user = user 
   end
 
   # signed_in? method
@@ -26,7 +26,7 @@ module SessionsHelper
   # We set the sign out method by setting the
   # current user to nil and deleting the cookie
   def sign_out
-    current_user = nil
+    self.current_user = nil
     cookies.delete(:remember_token)
 
   end
