@@ -10,8 +10,9 @@ class User < ActiveRecord::Base
   # before_save call back or hook would get executed before
   # an active record object is saved
   before_save { |user| user.email = user.email.downcase }
+  before_save :create_remember_token
   before_save :hello
-  
+
   # If you dont understand what call backs are, this method
   # would demonstrate it to you, basically a hello message
   # is printed before the active record object is saved
@@ -28,4 +29,12 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }
   validates :password_confirmation, presence: true
+
+  # We want to make the remember_token method private because we want
+  # it to be accesed only in this class
+  private
+    def create_remember_token
+      # Since this is the User class we could access user with the self
+      self.remember_token = SecureRandom.urlsafe_base64 
+    end
 end
