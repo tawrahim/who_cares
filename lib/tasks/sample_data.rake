@@ -1,5 +1,5 @@
 namespace :db do
-  describe "Fill in with sample method"
+  #describe "Fill in with sample method"
   task populate: :environment do
    admin = User.create!(name: "Example User",
                 email: "taw-ye@me.com",
