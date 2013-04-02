@@ -23,11 +23,28 @@ module SessionsHelper
     @current_user ||= User.find_by_remember_token(cookies[:remember_token]) 
   end
 
+  # check if the user we are edit is indeed him
+  def current_user?(user)
+    user == current_user
+  end
+
   # We set the sign out method by setting the
   # current user to nil and deleting the cookie
   def sign_out
     self.current_user = nil
     cookies.delete(:remember_token)
+  end
 
+  # Method to find where the user tried to visit last
+  def store_location
+    session[:return_to] = request.fullpath 
+  end
+
+  # Method that does the redirection
+  # the session[:return_to] tells us where the user last visited
+  # We also want to delete the sessions once we are done
+  def redirect_back_or(default)
+    redirect_to(session[:return_to] || default) 
+    session.delete(:return_to)
   end
 end
