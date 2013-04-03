@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
   attr_accessible :email, :name, :password, :password_confirmation
   has_secure_password
 
+  # The dependent:destroy means delete the micropost when you
+  # delete the user from the database
+  has_many :microposts, dependent: :destroy
+
   # This is a hook method or sometimes refered to as callback
   # methods, this gets called when an event is triggered
   # before_save call back or hook would get executed before

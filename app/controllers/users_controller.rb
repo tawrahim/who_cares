@@ -20,6 +20,7 @@ class UsersController < ApplicationController
   # This where the user_path comes in play
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
   
   # Method to create a new user
