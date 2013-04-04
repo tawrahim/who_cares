@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   # an active record object is saved
   before_save { |user| user.email = user.email.downcase }
   before_save :create_remember_token
-  before_save :hello
+#  before_save :hello
 
   # If you dont understand what call backs are, this method
   # would demonstrate it to you, basically a hello message
