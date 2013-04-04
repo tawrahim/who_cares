@@ -34,6 +34,11 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6 }
   validates :password_confirmation, presence: true
 
+  # The user feed method
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
+
   # We want to make the remember_token method private because we want
   # it to be accesed only in this class
   private

@@ -6,7 +6,7 @@
     <!--Rails form_for is a helper method that is used to
     create forms, the hash matches the model -->
     <%= form_for(@user) do |f| %>
-      <%= render 'shared/error_messages' %>
+      <%= render 'shared/error_messages', object: @user %>
       <%= f.label :name %>
       <%= f.text_field :name %>
 

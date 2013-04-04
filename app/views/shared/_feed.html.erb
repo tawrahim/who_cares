@@ -1,0 +1,8 @@
+<% if @feed_items.any? %>
+  <ol class="micropost">
+    <!-- This confusing so look in the feed items definition 
+      in the static pages controller -->
+    <%= render partial: 'shared/feed_item', collection: @feed_items  %>
+  </ol>
+  <%= will_paginate @feed_items %>
+<%end %>

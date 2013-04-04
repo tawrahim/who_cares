@@ -6,7 +6,9 @@ WhoCares::Application.routes.draw do
   # Create the sessions route but we dont want all
   # of them we just want three
   resources :sessions, only: [:new, :create, :destroy]
+  resources :microposts, only: [:create, :destroy]
 
+  
   # define some routes
   root to: 'static_pages#home'
 
