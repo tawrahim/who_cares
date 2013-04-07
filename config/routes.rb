@@ -1,12 +1,17 @@
 WhoCares::Application.routes.draw do
   # sets up the table of correspondency for
   # REST-actions
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
 
   # Create the sessions route but we dont want all
   # of them we just want three
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
 
   
   # define some routes

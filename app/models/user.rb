@@ -8,6 +8,13 @@ class User < ActiveRecord::Base
   # The dependent:destroy means delete the micropost when you
   # delete the user from the database
   has_many :microposts, dependent: :destroy
+  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
+  has_many :followed_users, through: :relationships, source: :followed
+  has_many :reverse_relationships, foreign_key: "followed_id", 
+                                  class_name: "Relationship",
+                                  dependent: :destroy
+  has_many :followers, through: :reverse_relationships, source: :follower
+
 
   # This is a hook method or sometimes refered to as callback
   # methods, this gets called when an event is triggered
@@ -16,6 +23,18 @@ class User < ActiveRecord::Base
   before_save { |user| user.email = user.email.downcase }
   before_save :create_remember_token
 #  before_save :hello
+
+  def following?(other_user)
+    self.relationships.find_by_followed_id(other_user.id)    
+  end
+
+  def follow!(other_user)
+    self.relationships.create!(followed_id: other_user.id)
+  end
+
+  def unfollow!(other_user)
+    self.relationships.find_by_followed_id(other_user.id).destroy 
+  end
 
   # If you dont understand what call backs are, this method
   # would demonstrate it to you, basically a hello message
