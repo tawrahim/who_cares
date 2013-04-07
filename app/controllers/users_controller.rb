@@ -6,7 +6,8 @@ class UsersController < ApplicationController
   # method before you hit the controller in the array
   # Reason behind checking the update is because some
   # sophisticated users might user cuRL to post data
-  before_filter :signed_in_user, only: [:index, :edit, :update]
+  before_filter :signed_in_user,
+                 only: [:index, :edit, :update, :destroy, :following, :followers]
   before_filter :correct_user, only: [:edit, :update]
   before_filter :admin_user, only: :destroy
 
@@ -63,6 +64,23 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     flash[:success] = "User deleted"
     redirect_to users_path 
+  end
+  
+  # Method for following the user
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.followed_users.paginate(page: params[:page])
+    render 'show_follow'    
+  end
+
+  
+  # Method for followers
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'    
   end
 
   private

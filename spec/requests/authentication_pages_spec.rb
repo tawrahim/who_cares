@@ -92,11 +92,23 @@ describe "Authentication" do
           end
 
           describe "visiting the user index" do
-             before { visit  user_path }
-             it { should have_selector('title', text: 'Sign in')}
+             #before { visit  user_path }
+             #it { should have_selector('title', text: 'Sign in')}
           end
+
+          describe "visiting the following page" do
+            before { visit following_user_path(user) }
+            it { should have_selector('title', text: 'Sign in') }
+          end
+
+          describe "visiting the followers page" do
+            before { visit followers_user_path(user) }
+            it { should have_selector('title', text: 'Sign in') }
+          end
+
        end
     end
+
     describe "in the Micropost controller" do
 
          describe "submitting to the create action" do
@@ -110,6 +122,19 @@ describe "Authentication" do
         end
     end
     
+    describe "in the relationship controller" do
+      
+         describe "submitting to the create action" do
+           before { post relationships_path }
+           specify { response.should redirect_to(signin_path) } 
+         end
+
+        describe "submitting to the destroy action" do
+          before { delete relationship_path(1) }
+          specify { response.should redirect_to(signin_path) } 
+        end
+    end
+
     describe "as wrong user" do
       let(:user) { FactoryGirl.create(:user)  }
       let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@me.com")  }
